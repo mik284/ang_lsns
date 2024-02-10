@@ -39,8 +39,6 @@ export class HomeComponent {
     this.housingLocationList = housingService.getAllHousingLocations();
   }
 
-  ngOn
-
   clickFn(message: string): void {
     console.log('message', message);
     alert('I have been clicked');
