@@ -34,6 +34,7 @@ import { FormsModule } from '@angular/forms';
 export class HousingLocationComponent {
   @Input() housingLocation!: HousingLocation;
   @Output() cityTitle = new EventEmitter();
+  
 
   handleFormChange(e:any) {
     this.cityTitle.emit(e)
