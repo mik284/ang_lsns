@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HomeComponent, RouterModule],
+  imports: [HomeComponent, RouterModule, CommonModule, ReactiveFormsModule],
   template: ` <main>
     <a [routerLink]="['/']">
       <header class="brand-name">
@@ -25,6 +27,7 @@ import { RouterModule } from '@angular/router';
   </main>`,
   styleUrls: ['./app.component.css'],
 })
+
 export class AppComponent {
   title = 'default';
 }
