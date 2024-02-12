@@ -54,9 +54,14 @@ export class HomeComponent implements OnInit {
   //   this.filteredLocationList = this.filteredLocationList;
   // }
   constructor(housingService: HousingService) {
-    housingService.getAllHousingLocations().subscribe((housedata) => {
-      this.housingLocationList = housedata;
-      this.filteredLocationList = housedata;
+    housingService.getAllHousingLocations().subscribe({
+      next: (housedata) => {
+        this.housingLocationList = housedata;
+        this.filteredLocationList = housedata;
+      },
+      error: (error) => {
+        console.log((error as Error).message);
+      },
     });
   }
 
@@ -80,4 +85,8 @@ export class HomeComponent implements OnInit {
         housingLocation?.city.toLowerCase().includes(text.toLowerCase())
     );
   }
+
+  // ngOnDestroy(housingService: HousingService) {
+  //   housingService.getAllHousingLocations().subscribe().unsubscribe();
+  // }
 }
