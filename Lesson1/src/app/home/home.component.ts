@@ -5,18 +5,30 @@ import { HousingLocationComponent } from '../housing-location/housing-location.c
 import { HousingService } from '../housing.service';
 import { HousingLocation } from '../housingLocation';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, HousingLocationComponent, FormsModule],
+  // standalone: true,
+  // imports: [
+  //   CommonModule,
+  //   HousingLocationComponent,
+  //   FormsModule,
+  //   HttpClientModule,
+  // ],
   template: `
     <section>
       {{ cityTitle }}
       <button (click)="clickFn('hello')">Click me</button>
       <form>
-        <input type="text" placeholder="Filter by city" #filter/>
-        <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
+        <input type="text" placeholder="Filter by city" #filter />
+        <button
+          class="primary"
+          type="button"
+          (click)="filterResults(filter.value)"
+        >
+          Search
+        </button>
       </form>
     </section>
     <section class="results">
@@ -29,20 +41,27 @@ import { FormsModule } from '@angular/forms';
   `,
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit{
-
+export class HomeComponent implements OnInit {
   housingLocationList: HousingLocation[] = [];
-  cityTitle = 'Kiambu';  
+  // housingService: HousingService = inject(HousingService);
+  cityTitle = 'Kiambu';
 
   // filteredLocationList holds the values that match the search criteria entered by the user.
   filteredLocationList: HousingLocation[] = [];
 
+  // constructor(housingService: HousingService) {
+  //   this.housingLocationList = housingService.getAllHousingLocations();
+  //   this.filteredLocationList = this.filteredLocationList;
+  // }
   constructor(housingService: HousingService) {
-    this.housingLocationList = housingService.getAllHousingLocations();
-    this.filteredLocationList = this.filteredLocationList;
+    housingService.getAllHousingLocations().subscribe((housedata) => {
+      this.housingLocationList = housedata;
+      this.filteredLocationList = housedata;
+    });
   }
+
   ngOnInit(): void {
-      this.filteredLocationList = this.housingLocationList;
+    this.filteredLocationList = this.housingLocationList;
   }
 
   clickFn(message: string): void {
@@ -50,16 +69,15 @@ export class HomeComponent implements OnInit{
     alert('I have been clicked');
   }
 
-  filterResults(text: string){
-    if(!text){
+  filterResults(text: string) {
+    if (!text) {
       this.filteredLocationList = this.housingLocationList;
       return;
     }
 
     this.filteredLocationList = this.housingLocationList.filter(
-      housingLocation => housingLocation?.city.toLowerCase().includes(text.toLowerCase())
-    )
+      (housingLocation) =>
+        housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+    );
   }
-
-
 }
