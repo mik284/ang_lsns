@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-housing-location',
-  standalone: true,
-  imports: [FormsModule, RouterModule],
+  // standalone: true,
+  // imports: [FormsModule, RouterModule],
   template: `
     <section class="listing">
       <form>

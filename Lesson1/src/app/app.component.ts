@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [HomeComponent, RouterModule, CommonModule, ReactiveFormsModule],
+  // standalone: true,
+  // imports: [HomeComponent, RouterModule, CommonModule, ReactiveFormsModule],
   template: ` <main>
     <a [routerLink]="['/']">
       <header class="brand-name">
