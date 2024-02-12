@@ -52,7 +52,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
-  housingSerice = inject(HousingService);
+  housingService = inject(HousingService);
   housingLocation: HousingLocation | undefined;
   // housingLocationId = -1;
 
@@ -62,14 +62,22 @@ export class DetailsComponent {
     email: new FormControl(''),
   });
 
-  constructor() {
-    const housingLocationId = Number(this.route.snapshot.params['id']);
-    this.housingLocation =
-      this.housingSerice.getHousingLocationById(housingLocationId);
-  }
+  // constructor() {
+  //   const housingLocationId = Number(this.route.snapshot.params['id']);
+  //   this.housingLocation =
+  //     this.housingSerice.getHousingLocationById(housingLocationId);
+  // }
 
+  constructor() {
+    const housingLocationId = parseInt(this.route.snapshot.params['id'], 10);
+    this.housingService
+      .getHousingLocationById(housingLocationId)
+      .then((housingLocation) => {
+        this.housingLocation = housingLocation;
+      });
+  }
   submitApplication() {
-    this.housingSerice.submitApplication(
+    this.housingService.submitApplication(
       this.applyForm.value.firstName ?? '',
       this.applyForm.value.lastName ?? '',
       this.applyForm.value.email ?? ''
