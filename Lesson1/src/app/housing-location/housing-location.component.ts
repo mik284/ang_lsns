@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocation } from '../housingLocation';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-housing-location',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterModule],
   template: `
     <section class="listing">
       <form>
@@ -27,6 +28,7 @@ import { FormsModule } from '@angular/forms';
       <p class="listing-location">
         {{ housingLocation.city }}, {{ housingLocation.state }}
       </p>
+      <a [routerLink]="['/details', housingLocation.id]">Learn More!</a>
     </section>
   `,
   styleUrl: './housing-location.component.css',
@@ -34,7 +36,7 @@ import { FormsModule } from '@angular/forms';
 export class HousingLocationComponent {
   @Input() housingLocation!: HousingLocation;
   @Output() cityTitle = new EventEmitter();
-  
+
 
   handleFormChange(e:any) {
     this.cityTitle.emit(e)
