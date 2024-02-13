@@ -9,6 +9,7 @@ import routeConfig from './routes';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { LoaderComponent } from './loader/loader.component';
 
 
 
@@ -17,6 +18,7 @@ import { BrowserModule } from '@angular/platform-browser';
     HousingLocationComponent,
     HomeComponent,
     AppComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,

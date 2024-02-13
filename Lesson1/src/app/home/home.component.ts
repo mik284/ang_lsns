@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
   //   HttpClientModule,
   // ],
   template: `
-    <div *ngIf="isHouseLoading">LOADING............</div>
+    <div *ngIf="isHouseLoading"><app-loader></app-loader></div>
     <section>
       {{ cityTitle }}
       <button (click)="clickFn('hello')">Click me</button>
