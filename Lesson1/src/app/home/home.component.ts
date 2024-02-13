@@ -20,8 +20,8 @@ import { Subscription } from 'rxjs';
   template: `
     <div *ngIf="isHouseLoading"><app-loader></app-loader></div>
     <section>
-      {{ cityTitle }}
-      <button (click)="clickFn('hello')">Click me</button>
+      <!-- {{ cityTitle }} -->
+      <!-- <button (click)="clickFn('hello')">Click me</button> -->
       <form>
         <input type="text" placeholder="Filter by city" #filter />
         <button
