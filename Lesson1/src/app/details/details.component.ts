@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HousingLocation } from '../housingLocation';
 import { HousingService } from '../housing.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { EmailValidator, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
@@ -42,7 +42,10 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
           <input id="last-name" type="text" formControlName="lastName" />
 
           <label for="email">Email</label>
-          <input id="email" type="email" formControlName="email" />
+          <input id="email" type="email" formControlName="email" required />
+          <div *ngIf="email?.errors?.['minlength']" style="color: brown;">
+            Name must be at least 4 characters long.
+          </div>
           <button type="submit" class="primary">Apply now</button>
         </form>
       </section>
@@ -50,7 +53,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   `,
   styleUrl: './details.component.css',
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   housingService = inject(HousingService);
   housingLocation: HousingLocation | undefined;
@@ -59,7 +62,7 @@ export class DetailsComponent {
   applyForm = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
-    email: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.minLength(4)]),
   });
 
   // constructor() {
@@ -75,6 +78,15 @@ export class DetailsComponent {
       .then((housingLocation) => {
         this.housingLocation = housingLocation;
       });
+  }
+  ngOnInit(): void {
+    this.applyForm;
+  }
+
+  
+
+  get email(){
+    return this.applyForm.get('email');
   }
   submitApplication() {
     this.housingService.submitApplication(
