@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HousingLocation } from './housingLocation';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, delay, interval } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -119,11 +119,11 @@ export class HousingService {
   //   return this.housingLocationList;
   // }
 
-   getAllHousingLocations(): Observable<HousingLocation[]>{
-    
-     const data = this.http.get<HousingLocation[]>(this.url);
-     // const resp = await data.json();   
-     return data ?? [];
+  getAllHousingLocations(): Observable<HousingLocation[]> {
+    const data = this.http.get<HousingLocation[]>(this.url);
+    // Delay the emission of data by 2000 milliseconds (2 seconds)
+    const delayedData = data.pipe(delay(2000));
+    return delayedData;
   }
 
   // getHousingLocationById(id: number): HousingLocation | undefined {
@@ -131,7 +131,9 @@ export class HousingService {
   //     (housingLocation) => housingLocation.id === id
   //   );
   // }
-  async getHousingLocationById(id: number): Promise<HousingLocation | undefined> {
+  async getHousingLocationById(
+    id: number
+  ): Promise<HousingLocation | undefined> {
     const data = await fetch(`${this.url}/${id}`);
     const resp = await data.json();
     return resp ?? {};

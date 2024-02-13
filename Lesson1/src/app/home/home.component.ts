@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 // import { HousingLocation } from '../housingLocation';
@@ -6,6 +6,7 @@ import { HousingService } from '../housing.service';
 import { HousingLocation } from '../housingLocation';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
   //   HttpClientModule,
   // ],
   template: `
+    <div *ngIf="isHouseLoading">LOADING............</div>
     <section>
       {{ cityTitle }}
       <button (click)="clickFn('hello')">Click me</button>
@@ -41,10 +43,12 @@ import { HttpClientModule } from '@angular/common/http';
   `,
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   housingLocationList: HousingLocation[] = [];
+  subscription: Subscription;
   // housingService: HousingService = inject(HousingService);
   cityTitle = 'Kiambu';
+  isHouseLoading: boolean = false;
 
   // filteredLocationList holds the values that match the search criteria entered by the user.
   filteredLocationList: HousingLocation[] = [];
@@ -54,7 +58,10 @@ export class HomeComponent implements OnInit {
   //   this.filteredLocationList = this.filteredLocationList;
   // }
   constructor(housingService: HousingService) {
-    housingService.getAllHousingLocations().subscribe({
+    this.subscription = housingService.getAllHousingLocations().subscribe({
+      complete: () => {
+        this.isHouseLoading = false;
+      },
       next: (housedata) => {
         this.housingLocationList = housedata;
         this.filteredLocationList = housedata;
@@ -66,6 +73,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isHouseLoading = true;
     this.filteredLocationList = this.housingLocationList;
   }
 
@@ -86,7 +94,8 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  // ngOnDestroy(housingService: HousingService) {
-  //   housingService.getAllHousingLocations().subscribe().unsubscribe();
-  // }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    console.log('destroyed');
+  }
 }
