@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Hero } from '../hero';
-import { HEROES } from '../mock-heroes';
+import { Hero } from '../../interfaces/hero';
+import { HEROES } from '../../mocks/mock-heroes';
 
 @Component({
   selector: 'app-heroes',
