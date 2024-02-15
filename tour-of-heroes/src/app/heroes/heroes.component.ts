@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Hero } from '../hero';
 
 @Component({
   selector: 'app-heroes',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './heroes.component.css'
 })
 export class HeroesComponent {
-   hero = "vodaphone"
+   hero: Hero = {id: 1, name: "vodaphone"}
 }
