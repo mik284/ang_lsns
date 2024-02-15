@@ -1,0 +1,8 @@
+<section style="border: 4px solid yellow; padding: 10px;">
+
+    <p>Who am I: {{toto}}</p>
+    
+    <div><label for="name">Parent-child name: <input type="text" id="name" placeholder="name" [(ngModel)]="parentChildV" (ngModelChange)="updateParentchild(parentChildV)"></label></div>  
+    <br>
+    <div><label for="name">child name: <input type="text" id="name" placeholder="name" [(ngModel)]="toto" (ngModelChange)="updateName(toto)"></label></div>
+</section>
