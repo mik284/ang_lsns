@@ -12,6 +12,8 @@ export class CommsService {
 
   private parentchild = new Subject<string>();
 
+  test = this.obj.asObservable();
+
   constructor() {}
 
   updateName(v: string) {
